@@ -155,7 +155,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             public void run() {
                 try {
                     getWeather(t,c);
-                    dashJobs.setText("Jobs\n\n" + numberOfJobs() + " jobs left today");
+                    dashJobs.setText("Жұмыстар\n\n" + numberOfJobs() + " j");
                 } catch (Exception ex) {
                     Log.d("HomeFragment (line 86)", "Schedule Weather Update: " + ex.toString());
                 }
