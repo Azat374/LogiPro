@@ -1,12 +1,15 @@
 package com.aquarian.drivers.ui.jobsActivity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -28,6 +31,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.aquarian.drivers.R;
+import com.aquarian.drivers.ui.jobsActivity.CustomScrollView;
+import com.aquarian.drivers.ui.jobsActivity.MyDrawView;
 import com.aquarian.drivers.util.GetData;
 import com.aquarian.drivers.util.GlobalVariables;
 import com.aquarian.drivers.util.VolleyMultipartRequest;
@@ -69,7 +74,15 @@ public class Signature extends AppCompatActivity {
         LinearLayout parent = (LinearLayout) findViewById(R.id.signatureLayout);
         MyDrawView myDrawView = new MyDrawView(this);
         parent.addView(myDrawView);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                }, 1001);
+            }
+        }
         View rootlayout = findViewById(android.R.id.content);
         context = getApplicationContext();
         picTest = (ImageView) findViewById(R.id.picPreview);
@@ -258,12 +271,10 @@ public class Signature extends AppCompatActivity {
 
     private Uri mImageUri;
 
-    private File createTemporaryFile(String part, String ext) throws Exception
-    {
-        File tempDir= Environment.getExternalStorageDirectory();
-        tempDir=new File(tempDir.getAbsolutePath()+"/.temp/");
-        if(!tempDir.exists())
-        {
+    private File createTemporaryFile(String part, String ext) throws Exception {
+        // Используем каталог, к которому у приложения точно есть доступ
+        File tempDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (tempDir != null && !tempDir.exists()) {
             tempDir.mkdirs();
         }
         return File.createTempFile(part, ext, tempDir);
