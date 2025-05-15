@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -34,7 +36,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static com.google.android.gms.internal.zzagr.runOnUiThread;
+//import static com.google.android.gms.internal.zzagr.runOnUiThread;
+import android.os.Handler;
+import android.os.Looper;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import androidx.core.app.ActivityCompat;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import android.location.Location;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
@@ -42,13 +52,16 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     GoogleMap map;
     MapView mapView;
     int zoom;
+    private FusedLocationProviderClient fusedLocationClient;
+
+    private ActivityResultLauncher<String[]> locationPermissionLauncher;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView dashDate = root.findViewById(R.id.dashDate);
         final TextView dashUser = root.findViewById(R.id.homeUser);
-        dashUser.setText(((GlobalVariables) getContext().getApplicationContext()).getDriverFirstname() + " ретінде кіру");
+        dashUser.setText("Жүргізуші: " + ((GlobalVariables) getContext().getApplicationContext()).getDriverFirstname());
         dashJobs = root.findViewById(R.id.dashJobs);
         final TextView dashWeather = root.findViewById(R.id.dashWeather);
         final TextView dashLastCon = root.findViewById(R.id.dashLastCon);
@@ -56,6 +69,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         dashDate.setText("Жұмыс күні\n\n" + getDate());
         scheduleUpdateLocation(dashWeather, this.getContext());
         dashLastCon.setText("Соңғы қосылым\n\n" + ((GlobalVariables) getContext().getApplicationContext()).getDriverLastConnection());
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
         zoom=4;
         mapView = (MapView) root.findViewById(R.id.mapView);
@@ -69,7 +83,40 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        locationPermissionLauncher = registerForActivityResult(
+                new ActivityResultContracts.RequestMultiplePermissions(),
+                result -> {
+                    boolean fineLocationGranted =
+                            result.containsKey(Manifest.permission.ACCESS_FINE_LOCATION) &&
+                                    Boolean.TRUE.equals(result.get(Manifest.permission.ACCESS_FINE_LOCATION));
+
+                    boolean coarseLocationGranted =
+                            result.containsKey(Manifest.permission.ACCESS_COARSE_LOCATION) &&
+                                    Boolean.TRUE.equals(result.get(Manifest.permission.ACCESS_COARSE_LOCATION));
+
+                    if (fineLocationGranted || coarseLocationGranted) {
+                        enableMyLocation();
+                    } else {
+                        Log.w("HomeFragment", "Location permission denied.");
+                    }
+                }
+        );
+
+
         return root;
+    }
+
+    private void requestLocationPermission() {
+        locationPermissionLauncher.launch(new String[] {
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+        });
+    }
+
+    private void enableMyLocation() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            map.setMyLocationEnabled(true);
+        }
     }
 
     private int numberOfJobs() {
@@ -107,9 +154,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         handler.postDelayed(runnableCode = new Runnable() {
             public void run() {
                 try {
-                        getWeather(t,c);
-                        dashJobs.setText("Жұмыстар\n\n" + numberOfJobs() + " жұмыс бүгін қалды");
-                    } catch (Exception ex) {
+                    getWeather(t,c);
+                    dashJobs.setText("Jobs\n\n" + numberOfJobs() + " jobs left today");
+                } catch (Exception ex) {
                     Log.d("HomeFragment (line 86)", "Schedule Weather Update: " + ex.toString());
                 }
             }
@@ -130,13 +177,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             {
                 String weather = ((GlobalVariables) c.getApplicationContext()).getWeather();
                 JSONObject jsonobject = new JSONObject(weather); //Parse JSON object
-                String weatherPrint = "Бүгін ауа-райы " + jsonobject.getString("name") + "\n\n";
+                String weatherPrint = "Today's weather in " + jsonobject.getString("name") + "\n\n";
                 JSONArray jarray = jsonobject.getJSONArray("weather");
                 jsonobject = jarray.getJSONObject(0);
                 weatherPrint += jsonobject.getString("description").substring(0, 1).toUpperCase() +  jsonobject.getString("description").substring(1) + "\n";
                 jsonobject = new JSONObject(weather);
                 jsonobject = jsonobject.getJSONObject("main");
-                weatherPrint += "Температура: " + Math.round(Double.parseDouble(jsonobject.getString("temp"))) + "ºC";
+                weatherPrint += "Temperature: " + Math.round(Double.parseDouble(jsonobject.getString("temp"))) + "ºC";
                 t.setText(weatherPrint);
             }
         }
@@ -146,26 +193,47 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    private void focusMap()
-    {
-        if (zoom==4){zoom=13;}
-        else{zoom=4;}
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(((GlobalVariables) getContext().getApplicationContext()).getLatitude(), ((GlobalVariables) getContext().getApplicationContext()).getLongitude()), zoom);
-        map.animateCamera(cameraUpdate);
+    private void focusMap() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestLocationPermission();
+            return;
+        }
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(location -> {
+                    if (location != null && map != null) {
+                        LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                        zoom = (zoom == 4) ? 15 : 4;
+                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(userLocation, zoom);
+                        map.animateCamera(cameraUpdate);
+                    } else {
+                        Log.w("HomeFragment", "Location is null");
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("HomeFragment", "Failed to get location", e));
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         map.getUiSettings().setMyLocationButtonEnabled(false);
-        map.setMyLocationEnabled(true);
 
-        // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(((GlobalVariables) getContext().getApplicationContext()).getLatitude(), ((GlobalVariables) getContext().getApplicationContext()).getLongitude()), 4);
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            map.setMyLocationEnabled(true);
+        } else {
+            requestLocationPermission(); // ✅ Новый способ
+        }
+
+        LatLng userLocation = new LatLng(
+                ((GlobalVariables) getContext().getApplicationContext()).getLatitude(),
+                ((GlobalVariables) getContext().getApplicationContext()).getLongitude()
+        );
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(userLocation, zoom);
         map.animateCamera(cameraUpdate);
-        //map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(((GlobalVariables) getContext().getApplicationContext()).getLatitude(), ((GlobalVariables) getContext().getApplicationContext()).getLongitude())));
-
     }
+
+
 
     @Override
     public void onResume() {

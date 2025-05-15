@@ -191,8 +191,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.nav_about: {
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                alertDialog.setTitle("Aquarian Drivers App");
-                alertDialog.setMessage("Application developed by students in Software Engineering and Computer Science courses at Napier University (Edinburgh) as part of the group project module.\n\n© Aquarian 2020");
+                alertDialog.setTitle("LogiPro Жүргізушілер Қосымшасы");
+                alertDialog.setMessage("Application developed logistics company management information system.\n\n© LogiPro 2025");
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

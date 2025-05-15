@@ -38,9 +38,9 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsHolder> {
 
     @Override
     public void onBindViewHolder(JobsHolder holder, int position) {
-        holder.nJobId.setText("Job " + (position+1));
-        holder.nStatus.setText("Status: " + sanitize(jobList.get(position).getStatus()));
-        holder.nDetails.setText("Type: " + sanitize(jobList.get(position).getParcelType()) + "\nParcel Nº: " + sanitize(jobList.get(position).geTtrackingId()));
+        holder.nJobId.setText("Жұмыс " + (position+1));
+        holder.nStatus.setText("Статус: " + sanitize(jobList.get(position).getStatus()));
+        holder.nDetails.setText("Түрі: " + sanitize(jobList.get(position).getParcelType()) + "\nЖүк Nº: " + sanitize(jobList.get(position).geTtrackingId()));
         holder.index = "" + position;
         holder.jobID = jobList.get(position).getId();
     }

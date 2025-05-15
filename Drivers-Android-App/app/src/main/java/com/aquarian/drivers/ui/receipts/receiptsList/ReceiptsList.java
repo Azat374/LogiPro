@@ -115,7 +115,7 @@ public class ReceiptsList extends Fragment {
         int index = parent.indexOfChild(mRecyclerView);
         parent.removeView(mRecyclerView);
         TextView t = new TextView(c);
-        t.setText("No receipts uploaded today.");
+        t.setText("Бүгін жүктеп салынған чек жоқ.");
         t.setGravity(Gravity.CENTER);
         t.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         t.setTextSize(18);

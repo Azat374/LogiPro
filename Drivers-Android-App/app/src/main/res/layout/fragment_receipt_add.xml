@@ -21,7 +21,7 @@
         android:layout_marginTop="60dp"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
-        android:text="Reason (e.g. fuel, toll)" />
+        android:text="Себебі (мысалы, жанармай, жолақы)" />
 
     <EditText
         android:id="@+id/addReceiptReason"
@@ -38,7 +38,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
-        android:text="Amount" />
+        android:text="Сома" />
 
     <EditText
         android:id="@+id/addReceiptAmount"
@@ -56,7 +56,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
-        android:text="Take Picture" />
+        android:text="Сурет түсіру" />
 
     <ImageView
         android:id="@+id/receiptPicPreview"
@@ -73,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
-        android:text="Upload Receipt" />
+        android:text="Чекті жүктеу" />
 
         </LinearLayout>
 

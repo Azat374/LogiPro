@@ -63,7 +63,7 @@ public class VehicleFragment extends Fragment {
                 JSONObject jsonobject = response.getJSONObject(i); //Parse JSON object
 
                 Iterator<String> iter = jsonobject.keys();
-                String[] headers = {"License Plate", "Brand", "Model", "Year", "Last MOT", "Next MOT", "Original Mileage", "Current Mileage", "Date Created"};
+                String[] headers = {"Регистрация нөмірі", "Бренд", "Модел", "Түсі", "Көлік сыйымдылығы", "Статус", "Енгізілген уақыты"};
                 int j = 0;
                 while (iter.hasNext()) {
                     String key = iter.next();

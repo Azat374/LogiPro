@@ -33,10 +33,10 @@ public class ReceiptsFragment extends Fragment {
         CustomViewPager viewPager = (CustomViewPager) fragmentView.findViewById(R.id.receiptsViewPager);
         viewPager.setPagingEnabled(false);
         TabLayout.Tab firstTab = tabLayout.newTab(); // Create a new Tab names
-        firstTab.setText("Today's Receipts"); // set the Text for the first Tab
+        firstTab.setText("Бүгінгі чектер"); // set the Text for the first Tab
         tabLayout.addTab(firstTab,true);
         TabLayout.Tab secondTab = tabLayout.newTab(); // Create a new Tab names
-        secondTab.setText("Upload Receipt"); // set the Text for the first Tab
+        secondTab.setText("Чекті жүктеу"); // set the Text for the first Tab
         tabLayout.addTab(secondTab,false);
 
         final TabAdapter adapter = new TabAdapter(this.getContext(), getChildFragmentManager(), tabLayout.getTabCount());
