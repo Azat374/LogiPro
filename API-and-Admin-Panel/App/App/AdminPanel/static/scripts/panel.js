@@ -6,6 +6,75 @@ var sortSelected = ["", "", "selected"];
 var isSort = false;
 var isIncremented = false;
 
+// Функция для перевода заголовков колонок с английского на казахский
+function translateHeader(englishHeader) {
+  const translations = {
+    'Drivers': 'Жүргізушілер',
+    'Vehicles': 'Көліктер',
+    'Customers': 'Клиенттер',
+    'Locations': 'Мекенжайлар',
+    'Jobs': 'Жұмыстар',
+    'Receipts': 'Чектер',
+    // Drivers table
+    'VehicleID': 'Көлік ID',
+    'Username': 'Пайдаланушы аты',
+    'Password': 'Құпиясөз',
+    'FirstName': 'Аты',
+    'LastName': 'Тегі',
+    'DOB': 'Туған күні',
+    'NINo': 'Ұлттық сәйкестендіру нөмірі',
+    'DrivingLicenseNo': 'Жүргізуші куәлігінің нөмірі',
+    'DrivingLicensePic': 'Жүргізуші куәлігінің суреті',
+    'Address1': 'Мекенжай 1',
+    'Address2': 'Мекенжай 2',
+    'City': 'Қала',
+    'PostCode': 'Пошта кодылар',
+    'Country': 'Ел',
+    'Location': 'Орналасқан жері',
+    'DateCreated': 'Жасалған күні',
+    'LastConnected': 'Соңғы қосылған уақыт',
+    
+    // Vehicles table
+    'RegistrationNo': 'Тіркеу нөмірі',
+    'Make': 'Өндіруші',
+    'Model': 'Үлгісі',
+    'Color': 'Түсі',
+    'Capacity': 'Сыйымдылығы',
+    'Status': 'Күйі',
+    
+    // Customers table
+    'Email': 'Электрондық пошта',
+    'Phone': 'Телефон',
+    
+    // Locations table
+    'CustomerID': 'Клиент ID',
+    
+    // Jobs table
+    'TrackingID': 'Бақылау ID',
+    'ParcelType': 'Сәлемдеме түрі',
+    'ParcelSize': 'Сәлемдеме өлшемі',
+    'ParcelWeight': 'Сәлемдеме салмағы',
+    'DateDue': 'Мерзімі',
+    'DateDelivered': 'Жеткізілген күні',
+    'DistanceTravelled': 'Жүрілген арақашықтық',
+    'Picture1': 'Сурет 1',
+    'Picture2': 'Сурет 2',
+    'Comments': 'Түсініктемелер',
+    'DriverID': 'Жүргізуші ID',
+    'PickupID': 'Алу орны ID',
+    'DropOffID': 'Түсіру орны ID',
+    'PricePaid': 'Төленген баға',
+    
+    // Receipts table
+    "ReceiptID": 'Чек ID',
+    'JobID': 'Жұмыс ID',
+    'Amount': 'Сома',
+    'Picture': 'Сурет'
+  };
+  
+  return translations[englishHeader] || englishHeader;
+}
+
 $("body").on("focus", ".datepicker_recurring_start", function () {
   $(this).datetimepicker({
     defaultDate: new Date(),
@@ -41,8 +110,7 @@ function getData(data, l1, l2) {
 function getHeaders(result) {
   var headers = [];
   $.each(result, function (key, value) {
-    headers.push(key);
-    //console.log(key);
+    headers.push(translateHeader(key)); // Применяем перевод
   });
   return headers;
 }
@@ -50,7 +118,7 @@ function getHeaders(result) {
 function makeTable(result, l1, l2) {
   isIncremented = false;
   var modalIndex = 0;
-  $("#pageHeader").html(tablename.charAt(0).toUpperCase() + tablename.slice(1));
+  $("#pageHeader").html(translateHeader(tablename.charAt(0).toUpperCase() + tablename.slice(1)) + " кестесі");
   $("#pageContent").css("margin-right", "15px");
 
   table =
@@ -58,7 +126,7 @@ function makeTable(result, l1, l2) {
 
   table +=
     '<div class="col-xl-3 col-md-6 mb-4"><div class="card border-left-success shadow h-10 py-2"><div class="card-body"><div class="row no-gutters align-items-center"><div class="col mr-2"><div class="text-xs font-weight-bold text-success text-uppercase mb-1">Саны: ' +
-    tablename +
+    translateHeader(tablename.charAt(0).toUpperCase() + tablename.slice(1)) +
     '</div><div class="h5 mb-0 font-weight-bold text-gray-800">' +
     totalNum +
     '</div></div><div class="col-auto"><i class="fas fa-warehouse fa-2x text-gray-300"></i></div></div></div></div></div>';
@@ -71,15 +139,16 @@ function makeTable(result, l1, l2) {
       sortSelected[1] +
       ' value="delivered">Жеткізілді</option><option ' +
       sortSelected[2] +
-      ' value="all">All</option></select></div></div></div><div class="col-auto" style="top:-14px;"><i class="fas fa-sort fa-2x text-gray-300"></i></div></div></div></div></div>';
+      ' value="all"><b>Барлығы</b></option></select></div></div></div><div class="col-auto" style="top:-14px;"><i class="fas fa-sort fa-2x text-gray-300"></i></div></div></div></div></div>';
   }
   table += "</div>";
   table +=
-    '<p style="margin-left:18px;">The table does not show all the values in a record. Click on a record to see them all and perform updates.</p>';
-  //table += '<div class="row"><div class="col-sm"><button style="display:inline-block;width:250px;margin-top:10px;margin-left:10px;" class="btn btn-dark" data-toggle="modal" data-target="#addModal">New</button></div><div class="col-sm"><h3 style="display:inline-block;margin-top:10px;margin-left:10px;">'+tablename.charAt(0).toUpperCase()+tablename.slice(1)+'</h3></div><div class="col-sm"><h4 style="margin-top:10px;margin-left:10px;">Total: '+result.length+'</h4></div></div><br>';
+    '<p style="margin-left:18px;">Кесте жазбадағы барлық мәндерді көрсетпейді. Олардың барлығын көру және жаңартуларды орындау үшін жазбаны басыңыз.</p>';
 
   table +=
     '<div style="width:auto;margin:18px;" class="card border-left-warning shadow"><table class="table table-hover"><thead><tr>';
+  
+  // Получаем переведенные заголовки
   var headers = getHeaders(result[0]);
   var modals = makeModals(result);
   var picModals = "";
@@ -98,7 +167,6 @@ function makeTable(result, l1, l2) {
     table += "<tr>";
     i = 0;
     for (var index in value) {
-      //console.log(value[index]);
       if (i < 8) {
         var t = "" + value[index];
         if (
@@ -109,16 +177,16 @@ function makeTable(result, l1, l2) {
           table +=
             '<td><a style="margin-left:5px;height:30px;cursor:pointer;" data-toggle="modal" data-target="#modalPic' +
             picId +
-            '" class="text-primary"><i class="fas fa-camera"></i> View picture</a></td>';
+            '" class="text-primary"><i class="fas fa-camera"></i> Суретті көру</a></td>';
 
           picModals +=
             '<div class="modal fade" id="modalPic' +
             picId +
-            '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="myModalLabel">Picture</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><a href="' +
+            '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="myModalLabel">Сурет</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><a href="' +
             value[index] +
             '" target="_blank"><img style="display:block;width:90%;margin:auto;" src="' +
             value[index] +
-            '" /></a></div><div class="modal-footer"><button type="button" class="btn btn-dark" data-dismiss="modal">Close</button></div></div></div></div>';
+            '" /></a></div><div class="modal-footer"><button type="button" class="btn btn-dark" data-dismiss="modal">Жабу</button></div></div></div></div>';
           picId++;
         } else {
           table +=
@@ -128,7 +196,6 @@ function makeTable(result, l1, l2) {
             value[index] +
             "</td>";
         }
-
         i++;
       }
     }
@@ -138,6 +205,8 @@ function makeTable(result, l1, l2) {
 
   table += "</tbody></table></div>";
   table = table.replace(/null/g, "");
+  
+  // Остальная часть функции остается без изменений...
   var totalPages = Math.ceil(totalNum / 10);
   if (l2 == 0) {
     if (result.length < 10) {
@@ -226,7 +295,7 @@ function makeModals(result) {
     modal += '<div class="modal-dialog modal-xl" role="document">';
     modal += '<div class="modal-content">';
     modal += '<div class="modal-header">';
-    modal += '<h5 class="modal-title">Update Record</h5>';
+    modal += '<h5 class="modal-title">Жазбаны жаңарту</h5>';
     modal +=
       '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
     modal += "</div>";
@@ -245,7 +314,6 @@ function makeModals(result) {
           elemId +
           '">';
       } else {
-        //console.log(index + " - oddCheck: " + oddCheck);
         var disabled = "";
         if (
           index.toLowerCase().includes("datecreated") ||
@@ -254,6 +322,8 @@ function makeModals(result) {
           disabled = 'disabled="disabled"';
         }
 
+        var translatedLabel = translateHeader(index);
+
         if (oddCheck % 2 == 1) {
           if (
             index.toLowerCase().includes("date") ||
@@ -261,7 +331,7 @@ function makeModals(result) {
           ) {
             modal +=
               '<div class="row"><div class="col-sm"><label>' +
-              index +
+              translatedLabel +
               '</label></div><div class="col-sm"><div id="date" class="input-group date"><input type="text" ' +
               disabled +
               ' class="form-control datepicker_recurring_start" name="' +
@@ -272,7 +342,7 @@ function makeModals(result) {
           } else {
             modal +=
               '<div class="row"><div class="col-sm"><label>' +
-              index +
+              translatedLabel +
               '</label></div><div class="col-sm"><input class="form-control" type="text" name="' +
               index +
               '" value="' +
@@ -286,7 +356,7 @@ function makeModals(result) {
           ) {
             modal +=
               '<div class="col-sm"><label>' +
-              index +
+              translatedLabel +
               '</label></div><div class="col-sm"><div id="date" class="input-group"><input type="text" ' +
               disabled +
               ' class="form-control datepicker_recurring_start" name="' +
@@ -297,7 +367,7 @@ function makeModals(result) {
           } else {
             modal +=
               '<div class="col-sm"><label>' +
-              index +
+              translatedLabel +
               '</label></div><div class="col-sm"><input class="form-control" type="text" name="' +
               index +
               '" value="' +
@@ -314,38 +384,41 @@ function makeModals(result) {
     }
 
     modal +=
-      '</form></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-danger" data-toggle="modal" onclick="getRowId(\'elemId' +
+      '</form></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Жабу</button><button type="button" class="btn btn-danger" data-toggle="modal" onclick="getRowId(\'elemId' +
       modalIndex +
-      '\');" data-target="#deleteModal" data-dismiss="modal">Delete</button><button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateRecord(' +
+      '\');" data-target="#deleteModal" data-dismiss="modal">Жою</button><button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateRecord(' +
       modalIndex +
       "," +
       elemId +
       ",'" +
       tablename +
-      "');\">Save changes</button></div></div></div></div>";
+      "');\">Өзгерістерді сақтау</button></div></div></div></div>";
     modalIndex++;
   });
 
-  var headers = getHeaders(result[0]);
+  var headers = [];
+  $.each(result[0], function (key, value) {
+    headers.push(key);
+  });
 
   modal +=
     '<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog modal-xl" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Жаңа жазба жасау</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><form name="createForm" id="createForm">';
 
   var first_iteration = true;
-  oddCheck = 0;
+  var oddCheck = 0;
   for (var header in headers) {
     if (first_iteration) {
       first_iteration = false;
     } else {
-      //modal += '<div class="row"><div class="col-sm"><label>' + headers[header] + '</label></div><div class="col-sm"><input type="text" name="' +  headers[header] + '" /></div></div><br>';
-
-      disabled = "";
+      var disabled = "";
       if (
         headers[header].toLowerCase().includes("datecreated") ||
         headers[header].toLowerCase().includes("lastconnected")
       ) {
         disabled = 'disabled="disabled"';
       }
+
+      var translatedLabel = translateHeader(headers[header]);
 
       if (oddCheck % 2 == 1) {
         if (
@@ -354,7 +427,7 @@ function makeModals(result) {
         ) {
           modal +=
             '<div class="row"><div class="col-sm"><label>' +
-            headers[header] +
+            translatedLabel +
             '</label></div><div class="col-sm"><div id="date" class="input-group"><input type="text" ' +
             disabled +
             ' class="form-control datepicker_recurring_start" name="' +
@@ -363,7 +436,7 @@ function makeModals(result) {
         } else {
           modal +=
             '<div class="row"><div class="col-sm"><label>' +
-            headers[header] +
+            translatedLabel +
             '</label></div><div class="col-sm"><input class="form-control" type="text" name="' +
             headers[header] +
             '" /></div>';
@@ -375,7 +448,7 @@ function makeModals(result) {
         ) {
           modal +=
             '<div class="col-sm"><label>' +
-            headers[header] +
+            translatedLabel +
             '</label></div><div class="col-sm"><div id="date" class="input-group"><input type="text" ' +
             disabled +
             ' class="form-control datepicker_recurring_start" name="' +
@@ -384,7 +457,7 @@ function makeModals(result) {
         } else {
           modal +=
             '<div class="col-sm"><label>' +
-            headers[header] +
+            translatedLabel +
             '</label></div><div class="col-sm"><input class="form-control" type="text" name="' +
             headers[header] +
             '" /></div></div><br>';
@@ -399,17 +472,16 @@ function makeModals(result) {
   }
 
   modal +=
-    '</form></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary" data-dismiss="modal" onclick="createRecord(\'' +
+    '</form></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Жабу</button><button type="button" class="btn btn-primary" data-dismiss="modal" onclick="createRecord(\'' +
     tablename +
     "');\">Жаңа жазба жасау</button></div></div></div></div>";
 
   modal +=
-    '<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Delete Record</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><p>Are you sure you want to delete this record?<br>This cannot be undone.</p></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteRecord(\'' +
+    '<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Жазбаны жою</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><p>Бұл жазбаны шынымен жойғыңыз келе ме?<br>Бұл әрекетті қайтаруға болмайды.</p></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Жабу</button><button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteRecord(\'' +
     tablename +
-    "');\">Delete</button></div></div></div></div>";
+    "');\">Жою</button></div></div></div></div>";
 
   modal = modal.replace(/null/g, "");
-
   return modal;
 }
 

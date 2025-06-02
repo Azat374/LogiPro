@@ -75,8 +75,8 @@ public class SplashScreen extends AppCompatActivity {
                 ((GlobalVariables) this.getApplication()).setDriverFirstname(jsonObject.getString("FirstName"));
                 ((GlobalVariables) this.getApplication()).setDriverLastConnection(jsonObject.getString("LastConnected"));
                 ((GlobalVariables) this.getApplication()).setVehicleID(jsonObject.getString("VehicleID"));
-                new GetData(SplashScreen.this).execute("https://f98a-176-64-18-48.ngrok-free.app/api/vehicles/" + jsonObject.getString("VehicleID"), "vehicle");
-                new GetData(SplashScreen.this).execute("https://f98a-176-64-18-48.ngrok-free.app/api/drivers/assigned/" + jsonObject.getString("DriverID"), "jobsFile");
+                new GetData(SplashScreen.this).execute("https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/api/vehicles/" + jsonObject.getString("VehicleID"), "vehicle");
+                new GetData(SplashScreen.this).execute("https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/api/drivers/assigned/" + jsonObject.getString("DriverID"), "jobsFile");
                 if (((GlobalVariables) this.getApplication()).getDriverFirstname() != null)
                 {
                     Intent intent = new Intent(this, MainActivity.class);

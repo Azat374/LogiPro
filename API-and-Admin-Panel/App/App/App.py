@@ -6,6 +6,9 @@ from Website.LandingPage import landing
 from API.RestAPI import rest_api
 from AdminPanel.AdminPanel import admin_panel
 
+# cd C:\Users\Admin\Desktop\LogiPro2\Transportation-Management-System\API-and-Admin-Panel\App
+# .\venv\Scripts\Activate.ps1
+# .\venv\Scripts\python.exe App/App.py
 app = Flask(__name__)
 app.secret_key = 'yuveyuveyu'
 

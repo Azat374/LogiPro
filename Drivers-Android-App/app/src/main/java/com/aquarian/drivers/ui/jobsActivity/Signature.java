@@ -170,7 +170,7 @@ public class Signature extends AppCompatActivity {
 
     private void uploadBitmap(final Bitmap bitmap) {
 
-        String UPLOAD_URL = "https://f98a-176-64-18-48.ngrok-free.app/api/receipts/uploads";
+        String UPLOAD_URL = "https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/api/receipts/uploads";
         //our custom volley request
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, UPLOAD_URL,
                 new Response.Listener<NetworkResponse>() {
@@ -234,16 +234,16 @@ public class Signature extends AppCompatActivity {
 
     private void updateDatabase(String imagename1, String imagename2){
         String driverID = ((GlobalVariables) getApplicationContext()).getDriverID();
-        String imageUrl1 = "https://f98a-176-64-18-48.ngrok-free.app/admin/static/images/receipts/" + imagename1 + ".png";
-        String imageUrl2 = "https://f98a-176-64-18-48.ngrok-free.app/admin/static/images/receipts/" + imagename2 + ".png";
-        String url = "https://f98a-176-64-18-48.ngrok-free.app/api/jobs/"+jobID+"?Picture1="+imageUrl1+"&Picture2="+imageUrl2+"&Status=Delivered&DateDelivered="+getDate("YYYY-MM-dd HH:mm:ss");
+        String imageUrl1 = "https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/admin/static/images/receipts/" + imagename1 + ".png";
+        String imageUrl2 = "https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/admin/static/images/receipts/" + imagename2 + ".png";
+        String url = "https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/api/jobs/"+jobID+"?Picture1="+imageUrl1+"&Picture2="+imageUrl2+"&Status=Delivered&DateDelivered="+getDate("YYYY-MM-dd HH:mm:ss");
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.PUT, url, null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d("JOB UPDATED", response.toString());
-                        new GetData(getApplicationContext()).execute("https://f98a-176-64-18-48.ngrok-free.app/api/drivers/assigned/" + ((GlobalVariables) getApplicationContext()).getDriverID(), "jobsFile");
+                        new GetData(getApplicationContext()).execute("https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/api/drivers/assigned/" + ((GlobalVariables) getApplicationContext()).getDriverID(), "jobsFile");
                         finish();
                     }
                 },

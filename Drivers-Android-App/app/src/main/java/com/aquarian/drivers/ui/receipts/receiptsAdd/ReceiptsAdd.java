@@ -152,7 +152,7 @@ public class ReceiptsAdd extends Fragment {
 
     private void uploadBitmap(final Bitmap bitmap) {
 
-        String UPLOAD_URL = "https://f98a-176-64-18-48.ngrok-free.app/api/receipts/uploads";
+        String UPLOAD_URL = "https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/api/receipts/uploads";
         //our custom volley request
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, UPLOAD_URL,
                 new Response.Listener<NetworkResponse>() {
@@ -214,8 +214,8 @@ public class ReceiptsAdd extends Fragment {
 
     private void updateDatabase(String amount, String type, String imagename){
         String driverID = ((GlobalVariables) getActivity().getApplicationContext()).getDriverID();
-        String imageUrl = "https://f98a-176-64-18-48.ngrok-free.app/admin/static/images/receipts/" + imagename + ".png";
-        String url = "https://f98a-176-64-18-48.ngrok-free.app/api/receipts?Amount="+amount+"&Type="+type+"&Picture="+imageUrl+"&DriverID="+driverID;
+        String imageUrl = "https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/admin/static/images/receipts/" + imagename + ".png";
+        String url = "https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/api/receipts?Amount="+amount+"&Type="+type+"&Picture="+imageUrl+"&DriverID="+driverID;
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.POST, url, null,
                 new Response.Listener<JSONArray>()
                 {

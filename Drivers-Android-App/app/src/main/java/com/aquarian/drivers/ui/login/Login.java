@@ -77,7 +77,7 @@ public class Login extends AppCompatActivity {
 
     private void POST_Request(String username, String password){
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://f98a-176-64-18-48.ngrok-free.app/api/drivers/login?Username="+username+"&Password="+password,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/api/drivers/login?Username="+username+"&Password="+password,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -102,13 +102,13 @@ public class Login extends AppCompatActivity {
             JSONArray jsonArray = new JSONArray(response);
             JSONObject jsonObject = jsonArray.getJSONObject(0);
             if (jsonObject.getString("Status").equals("Success")) {
-                new GetData(Login.this).execute("https://f98a-176-64-18-48.ngrok-free.app/api/drivers/assigned/" + jsonObject.getString("DriverID"), "jobsFile");
+                new GetData(Login.this).execute("https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/api/drivers/assigned/" + jsonObject.getString("DriverID"), "jobsFile");
                 SaveData.write("Driver", response, getApplicationContext());
                 ((GlobalVariables) this.getApplication()).setDriverID(jsonObject.getString("DriverID"));
                 ((GlobalVariables) this.getApplication()).setDriverFirstname(jsonObject.getString("FirstName"));
                 ((GlobalVariables) this.getApplication()).setDriverLastConnection(jsonObject.getString("LastConnected"));
                 ((GlobalVariables) this.getApplication()).setVehicleID(jsonObject.getString("VehicleID"));
-                new GetData(Login.this).execute("https://f98a-176-64-18-48.ngrok-free.app/api/vehicles/" + jsonObject.getString("VehicleID"), "vehicle");
+                new GetData(Login.this).execute("https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/api/vehicles/" + jsonObject.getString("VehicleID"), "vehicle");
                 if (((GlobalVariables) this.getApplication()).getDriverFirstname() != null)
                 {
                     TimerTask task = new TimerTask() {

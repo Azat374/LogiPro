@@ -1,27 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kk">
 
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="LogiPro - Сенімді логистикалық компания">
+  <meta name="author" content="LogiPro">
 
-  <title>LogiPro</title>
+  <title>LogiPro - Сенімді логистикалық серіктес</title>
 
-  <!-- Font Awesome Icons -->
-  <link href="./static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
-  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
 
-  <!-- Plugin CSS -->
-  <link href="./static/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
-
-  <!-- Theme CSS - Includes Bootstrap -->
-  <link href="./static/css/creative.min.css" rel="stylesheet">
 
   <!--Live Tracking Map-->
   <script src="./static/js/index.js"></script>
@@ -29,243 +21,340 @@
   <!-- Google Maps API key-->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgiyBi_nvIb44Qgx1joIWrhBezkSvU52I&callback=initMap"></script>
 
-  <style>
-    .map-container-5{
-    overflow:hidden;
-    padding-bottom:56.25%;
-    position:relative;
-    height:0;
-    }
-    .map-container-5 iframe{
-    left:0;
-    top:0;
-    height:100%;
-    width:100%;
-    position:absolute;
-    }
-  </style>
-
+  <style src="./static/css/style.css"></style>
+  <link rel="stylesheet" href="./static/css/style.css">
 </head>
 
-<body id="page-top">
-
+<body>
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">LogiPro</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+  <nav class="navbar" id="navbar">
+    <div class="navbar-container">
+      <a href="#hero" class="navbar-brand">LogiPro</a>
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
       </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto my-2 my-lg-0">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#about">Біз туралы</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#services">Қызметтер</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#tracking">Жеткізуді бақылау</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#quote">Баға алу</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#contact">Байланыс</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="navbar-nav" id="navbarNav">
+        <li><a href="#about" class="nav-link">Біз туралы</a></li>
+        <li><a href="#services" class="nav-link">Қызметтер</a></li>
+        <li><a href="#tracking" class="nav-link">Жеткізуді бақылау</a></li>
+        <li><a href="#quote" class="nav-link">Баға алу</a></li>
+        <li><a href="#contact" class="nav-link">Байланыс</a></li>
+      </ul>
     </div>
   </nav>
 
-  <!-- Masthead -->
-  <header class="masthead">
-    <div class="container h-100">
-      <div class="row h-100 align-items-center justify-content-center text-center">
-        <div class="col-lg-10 align-self-end">
-          <h1 class="text-uppercase text-white font-weight-bold">Сенімді логистикалық компания — Сіздің қажеттіліктеріңізге сай</h1>
-          <hr class="divider my-4">
-        </div>
-        <div class="col-lg-8 align-self-baseline">
-          <p class="text-white-75 font-weight-light mb-5">Бізбен ұзақ мерзімді серіктестік орнатыңыз!</p>
-          <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Толығырақ білу</a>
-        </div>
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="floating-elements">
+      <div class="floating-element">
+        <i class="fas fa-truck fa-3x"></i>
+      </div>
+      <div class="floating-element">
+        <i class="fas fa-shipping-fast fa-2x"></i>
+      </div>
+      <div class="floating-element">
+        <i class="fas fa-globe fa-2x"></i>
       </div>
     </div>
-  </header>
+    <div class="hero-content">
+      <h1>Сенімді логистикалық компания — Сіздің қажеттіліктеріңізге сай</h1>
+      <p>Бізбен ұзақ мерзімді серіктестік орнатып, заманауи жеткізу жүйесінің артықшылықтарын пайдаланыңыз</p>
+      <a href="#about" class="btn-primary">Толығырақ білу</a>
+    </div>
+  </section>
 
   <!-- About Section -->
-  <section class="page-section bg-primary" id="about">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-          <h2 class="text-white mt-0">Бізде сізге керектінің бәрі бар!</h2>
-          <hr class="divider light my-4">
-          <p class="text-white-50 mb-4">LogiPro — жүк тасымалдау саласында жетекші компаниялардың бірі. Біз сенімділік, жылдамдық және клиентке бағдарлану арқылы өзіміздің логистикалық шешімдерімізді ұсынамыз. Біздің миссиямыз – бизнесіңізді оңайлататын заманауи жеткізу жүйесін құру. Қайда болмасын, біз әрқашан бірге!</p>
-          <a class="btn btn-light btn-xl js-scroll-trigger" href="#services">Бастайық!</a>
-        </div>
-      </div>
+  <section class="about" id="about">
+    <div class="about-content">
+      <h2>Бізде сізге керектінің бәрі бар!</h2>
+      <p>LogiPro — жүк тасымалдау саласында жетекші компаниялардың бірі. Біз сенімділік, жылдамдық және клиентке бағдарлану арқылы өзіміздің логистикалық шешімдерімізді ұсынамыз. Біздің миссиямыз – бизнесіңізді оңайлататын заманауи жеткізу жүйесін құру. Қайда болмасын, біз әрқашан бірге!</p>
+      <a href="#services" class="btn-light">Бастайық!</a>
     </div>
   </section>
 
   <!-- Services Section -->
-  <section class="page-section" id="services">
-    <div class="container">
-      <h2 class="text-center mt-0">Сіз үшін қызмет көрсетеміз</h2>
-      <hr class="divider my-4">
-      <div class="row">
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-gem text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Тұрақты жүйелер</h3>
-            <p class="text-muted mb-0">Біз жүйелерімізді жиі жаңартып, тұрақты жұмыс істеуін қамтамасыз етеміз.</p>
+  <section class="services" id="services">
+    <div class="services-container">
+      <h2>Сіз үшін қызмет көрсетеміз</h2>
+      <p class="services-subtitle">Біз клиенттеріміздің қажеттіліктерін толық қанағаттандыратын кешенді шешімдер ұсынамыз</p>
+      
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-gem"></i>
           </div>
+          <h3>Тұрақты жүйелер</h3>
+          <p>Біз жүйелерімізді жиі жаңартып, тұрақты жұмыс істеуін қамтамасыз етеміз. 24/7 техникалық қолдау көрсетеміз.</p>
         </div>
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-laptop-code text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Заманауи технологиялар</h3>
-            <p class="text-muted mb-0">Барлық жаңартулар уақтылы енгізіледі.</p>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-laptop-code"></i>
           </div>
+          <h3>Заманауи технологиялар</h3>
+          <p>Барлық жаңартулар уақтылы енгізіледі. IoT және AI технологияларын пайдаланып жүктерді бақылаймыз.</p>
         </div>
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-globe text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Жариялауға дайын</h3>
-            <p class="text-muted mb-0"></p>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-globe"></i>
           </div>
+          <h3>Жариялауға дайын</h3>
+          <p>Халықаралық стандарттарға сай қызмет көрсету. Барлық елдерге жеткізу мүмкіндігі бар.</p>
         </div>
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-heart text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Махаббатпен жасалған</h3>
-            <p class="text-muted mb-0">Әр жобамызда жанымызды саламыз.</p>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-heart"></i>
           </div>
+          <h3>Махаббатпен жасалған</h3>
+          <p>Әр жобамызда жанымызды саламыз. Клиенттерімізбен ұзақ мерзімді қарым-қатынас орнатамыз.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Tracking Section -->
-  <section class="page-section bg-primary" id="tracking">
-    <!--Content-->
-    <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8 text-center">
-            <h2 class="text-white mt-0">Жеткізуді бақылау</h2>
-            <hr class="divider light my-4">
-            <p class="text-white-50 mb-4">Тапсырыс нөмірін енгізіңіз:</p>
-            
-            <div class="input-group">
-              <input style="margin-right:2px;" class="form-control" type="text" id="trackingID" />
-              <span style="cursor:pointer;" class="input-group-addon btn btn-light" onclick="getLocation();">Жіберу</span>
-            </div>
-            <br> 
-
-          <div class="mypanel"></div><br><br>
+  <section class="tracking" id="tracking">
+    <div class="tracking-container">
+      <h2>Жеткізуді бақылау</h2>
+      <p class="tracking-subtitle">Тапсырыс нөмірін енгізіп, жүгіңіздің қазіргі орналасуын нақты уақытта көріңіз</p>
+      
+      <div class="tracking-form">
+        <input type="text" id="trackingID" class="tracking-input" placeholder="Тапсырыс нөмірін енгізіңіз...">
+        <button onclick="getLocation()" class="tracking-btn">
+          <i class="fas fa-search"></i> Іздеу
+        </button>
+      </div>
+      
+      <div id="trackingResult" class="tracking-result"></div>
+      
+      <div class="map-container">
+        <div id="googleMap" style="width: 100%; height: 100%; border-radius: 10px; background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.7);">
+          <div style="text-align: center;">
+            <i class="fas fa-map-marked-alt fa-3x mb-3"></i>
+            <div>Тапсырыс нөмірін енгізіп, орналасуын көрсету</div>
           </div>
         </div>
       </div>
 
-      <!--Google map-->
-      <div id="googleMap" style="display:block;margin:auto;height:500px;width:80%;">
-      </div>
-    <!--/.Content-->
+    </div>
   </section>
 
-  <!-- Баға алу Section -->
-  <section class="page-section bg-dark text-white" id="quote">
-    <div class="container text-center">
-      <h2 class="mb-4">Баға ұсынысын алу</h2>
-
-      <!-- Geta a Quote Form-->
-      <form>
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Электрондық поштаңыз</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+  <!-- Quote Section -->
+  <section class="quote" id="quote">
+    <div class="quote-container">
+      <h2>Баға ұсынысын алу</h2>
+      <p class="quote-subtitle">Дәл баға алу үшін барлық талаптарды толтырыңыз</p>
+      
+      <form class="quote-form" id="quoteForm">
+        <!-- Customer Information -->
+        <div class="form-section">
+          <div class="section-title">
+            <i class="fas fa-user"></i>
+            Жеке мәліметтер
           </div>
-          <div class="form-group">
-              <label>Телефон нөміріңіз</label>
-              <input type="text" class="form-control" id="">
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Жеткізу түрі</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>Қазақстан бойынша жеткізу</option>
-              <option>Халықаралық жеткізу</option>
-              <option>Паллетті жеткізу</option>
-              <option>Сол күнгі жеткізу</option>
-              <option>Қазақстанға импорт</option>
-            </select>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm">
-              <label>Жеткізу мекенжайы</label>
-              <input type="text" class="form-control" id="">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Аты *</label>
+              <input type="text" class="form-input" id="firstName" required>
             </div>
-            <div class="col-sm">
-              <label>Сұрыптау коды</label>
-              <input type="text" class="form-control" id="">
+            <div class="form-group">
+              <label class="form-label">Тегі *</label>
+              <input type="text" class="form-input" id="lastName" required>
             </div>
           </div>
-          <div class="row">
-              <div class="col-sm">
-                <label>Қабылдау мекенжайы</label>
-                <input type="text" class="form-control" id="">
-              </div>
-              <div class="col-sm">
-                <label>Сұрыптау коды</label>
-                <input type="text" class="form-control" id="">
-              </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Электрондық пошта *</label>
+              <input type="email" class="form-input" id="email" placeholder="name@example.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Телефон нөміріңіз *</label>
+              <input type="tel" class="form-input" id="phone" placeholder="+7 (777) 123-45-67" required>
+            </div>
           </div>
-          <div class="form-group">
-            <br>
-              <label>Өлшемдер</label>
-              <input type="text" class="form-control" id="">
-          </div>
-          <div class="form-group">
-              <label>Салмақ</label>
-              <input type="text" class="form-control" id="">
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Жеткізуге қатысты қосымша ақпарат</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-          </div>
-        </form>
+        </div>
 
+        <!-- Delivery Information -->
+        <div class="form-section">
+          <div class="section-title">
+            <i class="fas fa-shipping-fast"></i>
+            Жеткізу ақпараты
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Жеткізу түрі *</label>
+              <select class="form-select" id="deliveryType" required>
+                <option value="">Таңдаңыз...</option>
+                <option value="standard">Стандарт (5-7 күн)</option>
+                <option value="express">Экспресс (2-3 күн)</option>
+              </select>
+            </div>
+          </div>
+          
+          <!-- Pickup Address -->
+          <h4 style="color: rgba(255,255,255,0.9); margin: 1.5rem 0 1rem; font-size: 1.1rem;">Қабылдау мекенжайы</h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Мекенжай *</label>
+              <input type="text" class="form-input" id="pickupAddress" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Пошта индексі</label>
+              <input type="text" class="form-input" id="pickupPostcode">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Қала *</label>
+              <input type="text" class="form-input" id="pickupCity" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Ел</label>
+              <select class="form-select" id="pickupCountry">
+                <option value="Kazakhstan">Қазақстан</option>
+                <option value="Russia">Ресей</option>
+                <option value="China">Қытай</option>
+                <option value="Kyrgyzstan">Қырғызстан</option>
+                <option value="Uzbekistan">Өзбекстан</option>
+              </select>
+            </div>
+          </div>
 
-      <a class="btn btn-light btn-xl" href="#quote">Жіберу</a>
+          <!-- Delivery Address -->
+          <h4 style="color: rgba(255,255,255,0.9); margin: 1.5rem 0 1rem; font-size: 1.1rem;">Жеткізу мекенжайы</h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Мекенжай *</label>
+              <input type="text" class="form-input" id="deliveryAddress" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Пошта индексі</label>
+              <input type="text" class="form-input" id="deliveryPostcode">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Қала *</label>
+              <input type="text" class="form-input" id="deliveryCity" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Ел</label>
+              <select class="form-select" id="deliveryCountry">
+                <option value="Kazakhstan">Қазақстан</option>
+                <option value="Russia">Ресей</option>
+                <option value="China">Қытай</option>
+                <option value="Kyrgyzstan">Қырғызстан</option>
+                <option value="Uzbekistan">Өзбекстан</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Package Information -->
+        <div class="form-section">
+          <div class="section-title">
+            <i class="fas fa-box"></i>
+            Жүк туралы ақпарат
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Жүк түрі *</label>
+              <select class="form-select" id="parcelType" required>
+                <option value="">Таңдаңыз...</option>
+                <option value="Documents">Құжаттар</option>
+                <option value="Electronics">Электроника</option>
+                <option value="Clothing">Киім</option>
+                <option value="Food">Азық-түлік</option>
+                <option value="Furniture">Жиһаз</option>
+                <option value="Fragile">Сынғыш заттар</option>
+                <option value="Other">Басқа</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Өлшемі *</label>
+              <select class="form-select" id="parcelSize" required>
+                <option value="">Таңдаңыз...</option>
+                <option value="Small">Кіші (30x20x10 см дейін)</option>
+                <option value="Medium">Орташа (60x40x30 см дейін)</option>
+                <option value="Large">Үлкен (100x80x60 см дейін)</option>
+                <option value="Extra Large">Өте үлкен (арнайы тасымалдау)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Салмақ (кг) *</label>
+              <input type="number" class="form-input" id="weight" step="0.1" min="0" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Ұзындық (см)</label>
+              <input type="number" class="form-input" id="length" min="0">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Ені (см)</label>
+              <input type="number" class="form-input" id="width" min="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Биіктік (см)</label>
+              <input type="number" class="form-input" id="height" min="0">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label class="form-label">Арнайы талаптар</label>
+              <textarea class="form-textarea" id="specialRequirements" rows="3" placeholder="Сақтау шарттары, жеткізу уақыты және т.б."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="quote-btn" onclick="calculateQuote()">
+          <i class="fas fa-calculator"></i> Баға есептеу
+        </button>
+      </form>
+
+      <div id="quoteResult"></div>
     </div>
   </section>
 
   <!-- Contact Section -->
-  <section class="page-section" id="contact">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-          <h2 class="mt-0">Байланыс орнатайық!</h2>
-          <hr class="divider my-4">
-          <p class="text-muted mb-5">Бізбен байланысқыңыз келе ме? Хабарласыңыз!</p>
+  <section class="contact" id="contact">
+    <div class="contact-container">
+      <h2>Байланыс орнатайық!</h2>
+      <p class="contact-subtitle">Бізбен байланысқыңыз келе ме? Хабарласыңыз!</p>
+      
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <div class="contact-text">+7 (777) 777-77-77</div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
-          <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
-          <div>+7(777)-777-77-77</div>
+        
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <a class="contact-text" href="mailto:contact.logipro@example.com">contact.logipro@example.co</a>
         </div>
-        <div class="col-lg-4 mr-auto text-center">
-          <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
-          <!-- Make sure to change the email address in anchor text AND the link below! -->
-          <a class="d-block" href="mailto:contact.logipro@example.com">contact.logipro@example.com</a>
+        
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="contact-text">Алматы, Қазақстан</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-light py-5">
-    <div class="container">
-      <div class="small text-center text-muted">Copyright &copy; 2025 - LogiPro Solutions</div>
+  <footer class="footer">
+    <div class="footer-text">
+      Copyright &copy; 2025 - LogiPro. Дипломдық жұмыс.
     </div>
   </footer>
 
@@ -279,8 +368,121 @@
 
   <!-- Custom scripts for this template -->
   <script src="./static/js/creative.min.js"></script>
+  <script>
+        // --- Calculate Quote ---
+    function calculateQuote() {
+      // Собираем данные из формы
+      const data = {
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName:  document.getElementById('lastName').value.trim(),
+        email:     document.getElementById('email').value.trim(),
+        phone:     document.getElementById('phone').value.trim(),
+        deliveryType: document.getElementById('deliveryType').value,
 
+        pickupAddress:  document.getElementById('pickupAddress').value.trim(),
+        pickupCity:     document.getElementById('pickupCity').value.trim(),
+        pickupCountry:  document.getElementById('pickupCountry').value,
+
+        deliveryAddress: document.getElementById('deliveryAddress').value.trim(),
+        deliveryCity:    document.getElementById('deliveryCity').value.trim(),
+        deliveryCountry: document.getElementById('deliveryCountry').value,
+
+        length:  parseFloat(document.getElementById('length').value) || 0,
+        width:   parseFloat(document.getElementById('width').value) || 0,
+        height:  parseFloat(document.getElementById('height').value) || 0,
+        weight:  parseFloat(document.getElementById('weight').value) || 0,
+
+        comment: document.getElementById('specialRequirements').value.trim()
+      };
+
+      // Простейшая валидация
+      if (!data.firstName || !data.lastName || !data.email || !data.phone) {
+        showQuoteError('Толық жеке мәліметтерді енгізіңіз');
+        return;
+      }
+      if (!data.deliveryType) {
+        showQuoteError('Жеткізу түрін таңдаңыз');
+        return;
+      }
+      if (!data.pickupAddress || !data.pickupCity) {
+        showQuoteError('Қабылдау мекенжайы мен қаласын толтырыңыз');
+        return;
+      }
+      if (!data.deliveryAddress || !data.deliveryCity) {
+        showQuoteError('Жеткізу мекенжайы мен қаласын толтырыңыз');
+        return;
+      }
+      if (data.weight <= 0) {
+        showQuoteError('Салмақты беріңіз');
+        return;
+      }
+
+      // Дисплейді «жүктелуде» индикаторымен көрсетеміз
+      showLoadingQuote();
+
+      fetch('http://127.0.0.1:5000/api/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(res => res.json())
+        .then(result => {
+          if (result.error) {
+            showQuoteError(result.error);
+          } else {
+            showQuoteSuccess(result);
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          showQuoteError('Сервер қатесі!');
+        });
+    }
+
+    // Қате шықса
+    function showQuoteError(message) {
+      document.getElementById('quoteResult').innerHTML = `
+        <div class="alert alert-danger">
+          <i class="fas fa-exclamation-circle"></i> ${message}
+        </div>`;
+    }
+
+    // Жүктелуде индикаторын көрсетеміз
+    function showLoadingQuote() {
+      document.getElementById('quoteResult').innerHTML = `
+        <div class="quote-result-card" style="display: flex; align-items: center; justify-content: center;">
+          <div class="loading"></div>
+          <span style="margin-left: 1rem; color: white; font-weight: 500;">Есептелуде...</span>
+        </div>`;
+    }
+
+    // Сәтті нәтиже шыққанда
+    function showQuoteSuccess(result) {
+      const { price, distance_km, eta_days } = result;
+      document.getElementById('quoteResult').innerHTML = `
+        <div class="quote-result-card">
+          <div class="quote-result-header">
+            <i class="fas fa-check-circle"></i>
+            <h3>Баға ұсынысы</h3>
+          </div>
+          <div class="quote-result-item">
+            <i class="fas fa-coins"></i>
+            <div class="quote-result-text"><strong>Бағасы:</strong> ${price.toLocaleString('kk', { minimumFractionDigits: 2 })} ₸</div>
+          </div>
+          <div class="quote-result-item">
+            <i class="fas fa-road"></i>
+            <div class="quote-result-text"><strong>Қашықтығы:</strong> ${distance_km} км</div>
+          </div>
+          <div class="quote-result-item">
+            <i class="fas fa-clock"></i>
+            <div class="quote-result-text"><strong>Жеткізу уақыты:</strong> ${eta_days}</div>
+          </div>
+        </div>`;
+    }
+
+
+
+
+  </script>
 </body>
-
 </html>
-

@@ -1,7 +1,8 @@
+import math
 import sys, os
 [sys.path.append('/var/www/html/env/App/App')]
 
-from flask import Blueprint, jsonify, make_response, request
+from flask import Blueprint, jsonify, logging, make_response, request
 from flask import current_app as app
 from extensions import mysql
 from flask_cors import CORS
@@ -11,10 +12,132 @@ from werkzeug.utils import secure_filename
 
 rest_api = Blueprint('rest_api', __name__)
 CORS(rest_api)
+GOOGLE_API_KEY = 'AIzaSyAu2N2Jf_kRUNW1gpVllTgIVgxbhaZVmoU'
+
+def get_distance_duration(pickup_address, delivery_address, api_key):
+    base_url = "https://maps.googleapis.com/maps/api/distancematrix/json"
+    params = {
+        'origins': pickup_address,
+        'destinations': delivery_address,
+        'mode': 'driving',
+        'units': 'metric',
+        'key': api_key
+    }
+
+    response = requests.get(base_url, params=params)
+    data = response.json()
+
+    if data['status'] != 'OK':
+        raise Exception(f"Google API Error: {data['status']}")
+
+    element = data['rows'][0]['elements'][0]
+    if element['status'] != 'OK':
+        raise Exception(f"Distance Matrix Error: {element['status']}")
+
+    distance_km = element['distance']['value'] / 1000
+    duration_min = element['duration']['value'] / 60
+    return round(distance_km, 2), round(duration_min, 1)
+
+@rest_api.route('/quote', methods=['POST'])
+def get_quote():
+    data = request.get_json()
+
+    pickup = f"{data['pickupAddress']}, {data['pickupCity']}, Kazakhstan"
+    dropoff = f"{data['deliveryAddress']}, {data['deliveryCity']}, Kazakhstan"
+    print(f"Pickup: {pickup}, Dropoff: {dropoff}")
+
+    try:
+        distance_km, duration_min = get_distance_duration(pickup, dropoff, GOOGLE_API_KEY)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+   
+    delivery_type = data.get('deliveryType', 'standart')
+    # Объём в кубометрах (длина, ширина, высота в сантиметрах)
+    volume_m3 = (data.get('length', 0) * data.get('width', 0) * data.get('height', 0)) / 1_000_000
+    weight = data.get('weight', 0)
+
+    # Базовая цена
+    base_price = 1000
+
+    # Коэффициенты:
+    # при стандарт: distance*120, weight*150, volume*400
+    # при экспресс: делаем коэффициенты выше на 20%
+    coef_multiplier = 1.2 if delivery_type == 'express' else 1.0
+
+    price = estimate_price_tier(duration_min, delivery_type)
+
+    # Оценка дней доставки
+    eta_days = estimate_delivery_days(duration_min, delivery_type)
+
+    return jsonify({
+        'price': round(price, 2),
+        'distance_km': round(distance_km, 2),
+        'eta_days': eta_days
+    })
+
+
+def estimate_delivery_days(duration_min, delivery_type):
+    """
+    Жеткізу уақытының мәтіндік бағасын қайтару (күндер түрінде).
+    """
+    # Express-доставка үшін «жылдам» шарттар
+    if delivery_type == 'express':
+        if duration_min < 60:
+            return 'Бүгін (жылдам)'
+        elif duration_min < 240:  # 4 сағатқа дейін
+            return '1 күн ішінде'
+        elif duration_min < 480:  # 8 сағатқа дейін
+            return '1–2 күн ішінде'
+        elif duration_min < 1440:  # 24 сағатқа дейін
+            return '2–3 күн ішінде'
+        else:
+            return '3–5 күн ішінде'
+    # Standard-доставка
+    else:
+        if duration_min < 60:
+            return '1–2 күн'
+        elif duration_min < 240:
+            return '2–3 күн'
+        elif duration_min < 720:  # 12 сағат
+            return '3–4 күн'
+        elif duration_min < 1440:
+            return '4–5 күн'
+        else:
+            return '5+ күн'
+
+
+def estimate_price_tier(duration_min, delivery_type):
+    """
+    duration_min (минут) мен жеткізу түріне негізделе отырып, нақты тариф 
+    (₸) қайтару. Кестеде көрсетілген категорияларға сәйкес.
+    """
+    # Тарифтік кесте:
+    # (бастапқы минут, соңғы минут, express_price, standard_price)
+    tiers = [
+        (0,    60,    5000, 3000),   # Бір сағаттан аз
+        (60,   240,   7000, 5000),   # 1–4 сағат
+        (240,  480,   9000, 7000),   # 4–8 сағат
+        (480,  1440,  12000,10000),  # 8–24 сағат
+        (1440, 2880,  15000,12000),  # 1–2 күн
+        (2880, 4320,  18000,15000),  # 2–3 күн
+        (4320, 5760,  20000,17000),  # 3–4 күн
+        (5760, 8640,  22000,19000),  # 4–6 күн
+        (8640, math.inf, 25000,22000) # 6+ күн
+    ]
+
+    # Қай тарифке сәйкес келетінін анықтаймыз
+    for (min_bound, max_bound, express_price, standard_price) in tiers:
+        if min_bound <= duration_min < max_bound:
+            return express_price if delivery_type == 'express' else standard_price
+
+    # Егер ешбір диапазонға сай келмесе (теорияда болмайды)
+    return 0
+
+
 
 @rest_api.route("/")
 def apiDefault():
-    return make_response(jsonify([{"Name":"Aquarian REST API","Version":"0.1","Created":"08/02/2020","LastModified":"29/02/2020"}]))
+    return make_response(jsonify([{"Name":"LogiPro REST API","Version":"0.1","Created":"01/05/2025","LastModified":"21/05/2025"}]))
 
 
 # Jobs
@@ -189,7 +312,7 @@ def returnDrivers():
             if headers[x] == 'Username':
                params[x] = uname
             if headers[x] == 'Password':
-               params[x] = 'Aquarian'
+               params[x] = 'pass'
 
             sql += ''.join(str(v) for v in headers[x]) + ','
         sql = sql[:-1]

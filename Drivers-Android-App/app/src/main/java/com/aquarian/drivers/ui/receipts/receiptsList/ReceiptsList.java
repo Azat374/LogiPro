@@ -67,7 +67,7 @@ public class ReceiptsList extends Fragment {
     {
             Log.d("RAN", "I RAN");
             RequestQueue queue = Volley.newRequestQueue(c);
-            String url = "https://f98a-176-64-18-48.ngrok-free.app/api/receipts/driver/" + ((GlobalVariables) c.getApplicationContext()).getDriverID();
+            String url = "https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/api/receipts/driver/" + ((GlobalVariables) c.getApplicationContext()).getDriverID();
             JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONArray>()
                     {

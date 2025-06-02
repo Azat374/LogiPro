@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 ((GlobalVariables) getApplicationContext()).setLatitude(location.getLatitude());
                 ((GlobalVariables) getApplicationContext()).setLongitude(location.getLongitude());
                 RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                String url ="https://f98a-176-64-18-48.ngrok-free.app/api/drivers/" + DriverID + "/location?Location=" + location.getLatitude() + "," + location.getLongitude();
+                String url ="https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/api/drivers/" + DriverID + "/location?Location=" + location.getLatitude() + "," + location.getLongitude();
 
 // Request a string response from the provided URL.
                 StringRequest stringRequest = new StringRequest(Method.PUT, url,
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Add the request to the RequestQueue.
                 queue.add(getRequest);
-                new GetData(getApplication()).execute("https://f98a-176-64-18-48.ngrok-free.app/api/drivers/assigned/" + ((GlobalVariables) getApplication()).getDriverID(), "jobsFile");
+                new GetData(getApplication()).execute("https://1eca-2a0d-b201-10e0-f597-e90a-efe4-9a18-c348.ngrok-free.app/api/drivers/assigned/" + ((GlobalVariables) getApplication()).getDriverID(), "jobsFile");
             }
 
             @Override

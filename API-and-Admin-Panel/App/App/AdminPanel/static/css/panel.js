@@ -50,7 +50,7 @@ function makeTable(result, l1, l2) {
     '</div></div><div class="col-auto"><i class="fas fa-warehouse fa-2x text-gray-300"></i></div></div></div></div></div></div></div>';
 
   table +=
-    '<p style="margin-left:18px;">The table does not show all the values in a record. Click on a record to see them all and perform updates.</p>';
+    '<p style="margin-left:18px;">Кесте жазбадағы барлық мәндерді көрсетпейді. Олардың барлығын көру және жаңартуларды орындау үшін жазбаны басыңыз.</p>';
   //table += '<div class="row"><div class="col-sm"><button style="display:inline-block;width:250px;margin-top:10px;margin-left:10px;" class="btn btn-dark" data-toggle="modal" data-target="#addModal">New</button></div><div class="col-sm"><h3 style="display:inline-block;margin-top:10px;margin-left:10px;">'+tablename.charAt(0).toUpperCase()+tablename.slice(1)+'</h3></div><div class="col-sm"><h4 style="margin-top:10px;margin-left:10px;">Total: '+result.length+'</h4></div></div><br>';
 
   table +=
