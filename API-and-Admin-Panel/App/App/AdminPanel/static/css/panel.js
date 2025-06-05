@@ -35,26 +35,67 @@ function getHeaders(result) {
 }
 
 function makeTable(result, l1, l2) {
+  isIncremented = false;
   var modalIndex = 0;
-  $("#pageHeader").html(tablename.charAt(0).toUpperCase() + tablename.slice(1));
+  $("#pageHeader").html(translateHeader(tablename.charAt(0).toUpperCase() + tablename.slice(1)) + " кестесі");
   $("#pageContent").css("margin-right", "15px");
 
+  // Modern card design for actions
   table =
-    '<div style="margin-left:5px;" class="row"><div class="col-xl-3 col-md-6 mb-4"><div class="card card-hover border-left-primary shadow h-10 py-2" data-toggle="modal" data-target="#addModal" style="cursor: pointer;"><div class="card-body"><div class="row no-gutters align-items-center"><div class="col mr-2"><div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Қосу</div><div class="h5 mb-0 font-weight-bold text-gray-800">Жаңа жазба жасау</div></div><div class="col-auto"><i class="fas fa-plus fa-2x text-gray-300"></i></div></div></div></div></div>';
+    '<div class="row mb-4">' +
+    '<div class="col-xl-3 col-md-6 mb-4">' +
+    '<div class="card card-hover border-left-primary shadow-sm h-100 py-2" data-toggle="modal" data-target="#addModal" style="cursor: pointer; transition: all 0.3s ease;">' +
+    '<div class="card-body">' +
+    '<div class="row no-gutters align-items-center">' +
+    '<div class="col mr-2">' +
+    '<div class="text-xs font-weight-bold text-primary text-uppercase mb-2">Қосу</div>' +
+    '<div class="h5 mb-0 font-weight-bold text-gray-800">Жаңа жазба жасау</div>' +
+    '</div>' +
+    '<div class="col-auto">' +
+    '<i class="fas fa-plus fa-2x text-primary opacity-50"></i>' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>';
 
+  // Stats card with improved design
   table +=
-    '<div class="col-xl-3 col-md-6 mb-4"><div class="card border-left-success shadow h-10 py-2"><div class="card-body"><div class="row no-gutters align-items-center"><div class="col mr-2"><div class="text-xs font-weight-bold text-success text-uppercase mb-1">Саны: ' +
-    tablename + 
-    '</div><div class="h5 mb-0 font-weight-bold text-gray-800">' +
+    '<div class="col-xl-3 col-md-6 mb-4">' +
+    '<div class="card border-left-success shadow-sm h-100 py-2">' +
+    '<div class="card-body">' +
+    '<div class="row no-gutters align-items-center">' +
+    '<div class="col mr-2">' +
+    '<div class="text-xs font-weight-bold text-success text-uppercase mb-2">Саны: ' +
+    translateHeader(tablename.charAt(0).toUpperCase() + tablename.slice(1)) +
+    '</div>' +
+    '<div class="h5 mb-0 font-weight-bold text-gray-800">' +
     totalNum +
-    '</div></div><div class="col-auto"><i class="fas fa-warehouse fa-2x text-gray-300"></i></div></div></div></div></div></div></div>';
+    '</div>' +
+    '</div>' +
+    '<div class="col-auto">' +
+    '<i class="fas fa-warehouse fa-2x text-success opacity-50"></i>' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>';
 
   table +=
-    '<p style="margin-left:18px;">Кесте жазбадағы барлық мәндерді көрсетпейді. Олардың барлығын көру және жаңартуларды орындау үшін жазбаны басыңыз.</p>';
-  //table += '<div class="row"><div class="col-sm"><button style="display:inline-block;width:250px;margin-top:10px;margin-left:10px;" class="btn btn-dark" data-toggle="modal" data-target="#addModal">New</button></div><div class="col-sm"><h3 style="display:inline-block;margin-top:10px;margin-left:10px;">'+tablename.charAt(0).toUpperCase()+tablename.slice(1)+'</h3></div><div class="col-sm"><h4 style="margin-top:10px;margin-left:10px;">Total: '+result.length+'</h4></div></div><br>';
+    '<div class="alert alert-info mb-4" role="alert" style="margin-left:18px; margin-right:18px;">' +
+    '<i class="fas fa-info-circle mr-2"></i> Кесте жазбадағы барлық мәндерді көрсетпейді. Олардың барлығын көру және жаңартуларды орындау үшін жазбаны басыңыз.' +
+    '</div>';
 
+  // Enhanced table design
   table +=
-    '<div style="width:auto;margin:18px;" class="card border-left-warning shadow"><table class="table table-hover"><thead><tr>';
+    '<div class="card shadow-sm mb-4" style="margin:18px;">' +
+    '<div class="card-body p-0">' +
+    '<div class="table-responsive">' +
+    '<table class="table table-hover mb-0">' +
+    '<thead class="bg-light">' +
+    '<tr>';
+
   var headers = getHeaders(result[0]);
   var modals = makeModals(result);
   var picModals = "";
@@ -62,45 +103,59 @@ function makeTable(result, l1, l2) {
   var i = 0;
   for (var header in headers) {
     if (i < 8) {
-      table += '<th scope="col">' + headers[header] + "</th>";
+      table += '<th scope="col" class="px-4 py-3">' + headers[header] + "</th>";
       i++;
     }
   }
   table += "</tr></thead><tbody>";
 
   $.each(result, function (key, value) {
-    table += "<tr>";
+    table += '<tr class="align-middle">';
     i = 0;
     for (var index in value) {
-      //console.log(value[index]);
       if (i < 8) {
         var t = "" + value[index];
         var picId = 1;
-        if (
-          t.toLowerCase().includes(".jpg") ||
-          t.toLowerCase().includes(".png")
-        ) {
+        if (t.toLowerCase().includes(".jpg") || t.toLowerCase().includes(".png")) {
           table +=
-            '<td><button style="margin-left:5px;" data-toggle="modal" data-target="#modalPic' +
+            '<td class="px-4 py-3">' +
+            '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalPic' +
             picId +
-            '" class="btn btn-primary"><i class="fas fa-camera"></i> View picture</button></td>';
+            '">' +
+            '<i class="fas fa-camera mr-1"></i> Суретті көру' +
+            '</button>' +
+            '</td>';
 
           picModals +=
             '<div class="modal fade" id="modalPic' +
             picId +
-            '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="myModalLabel">Receipt Picture</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><img style="display:block;width:80%;margin:auto;" src="' +
-            value[index] +
-            '" /></div><div class="modal-footer"><button type="button" class="btn btn-dark" data-dismiss="modal">Close</button></div></div></div></div>';
+            '" tabindex="-1" role="dialog">' +
+            '<div class="modal-dialog modal-lg" role="document">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h5 class="modal-title">Сурет</h5>' +
+            '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+            '<span aria-hidden="true">&times;</span>' +
+            '</button>' +
+            '</div>' +
+            '<div class="modal-body text-center">' +
+            '<img class="img-fluid" src="' + value[index] + '" alt="Receipt" />' +
+            '</div>' +
+            '<div class="modal-footer">' +
+            '<button type="button" class="btn btn-secondary" data-dismiss="modal">Жабу</button>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
           picId++;
         } else {
           table +=
-            '<td data-toggle="modal" data-target="#modal' +
+            '<td class="px-4 py-3" data-toggle="modal" data-target="#modal' +
             modalIndex +
             '" style="cursor: pointer;">' +
             value[index] +
             "</td>";
         }
-
         i++;
       }
     }
@@ -108,82 +163,71 @@ function makeTable(result, l1, l2) {
     modalIndex++;
   });
 
-  table += "</tbody></table></div>";
+  table += "</tbody></table></div></div></div>";
   table = table.replace(/null/g, "");
   currentPage = 1;
   var totalPages = Math.ceil(totalNum / 10);
+
+  // Enhanced pagination design
   if (l2 == 0) {
     if (result.length < 10) {
       table +=
-        '<footer><div><div><h3 style="cursor:default;" class="d-inline"><span class="badge badge-secondary"><i class="fas fa-angle-left"></i></span></h3>';
-      table +=
-        '&nbsp;<h3 style="cursor:default;" class="d-inline"><span class="badge badge-secondary"><i class="fas fa-angle-right"></i></span></h3><div style="width:150px;">Page ' +
-        currentPage +
-        "/" +
-        totalPages +
-        "</div></div></div></footer>";
+        '<div class="d-flex justify-content-between align-items-center px-4 py-3">' +
+        '<div class="text-muted">Бет ' + currentPage + ' / ' + totalPages + '</div>' +
+        '<div class="btn-group">' +
+        '<button class="btn btn-secondary btn-sm disabled"><i class="fas fa-angle-left"></i></button>' +
+        '<button class="btn btn-secondary btn-sm disabled"><i class="fas fa-angle-right"></i></button>' +
+        '</div>' +
+        '</div>';
     } else {
-      table +=
-        '<footer><div><div><h3 style="cursor:default;" class="d-inline"><span class="badge badge-secondary"><i class="fas fa-angle-left"></i></span></h3>';
       l2 += 10;
       table +=
-        '&nbsp;<h3 class="d-inline" onclick="getData(\'' +
-        tablename +
-        "'," +
-        l1 +
-        "," +
-        l2 +
-        ');currentPage++;"><span class="badge badge-primary"><i class="fas fa-angle-right"></i></span></h3><div style="width:150px;">Page ' +
-        currentPage +
-        "/" +
-        totalPages +
-        "</div></div></div></footer>";
+        '<div class="d-flex justify-content-between align-items-center px-4 py-3">' +
+        '<div class="text-muted">Бет ' + currentPage + ' / ' + totalPages + '</div>' +
+        '<div class="btn-group">' +
+        '<button class="btn btn-secondary btn-sm disabled"><i class="fas fa-angle-left"></i></button>' +
+        '<button class="btn btn-primary btn-sm" onclick="getData(\'' + tablename + "'," + l1 + "," + l2 + ');currentPage++;"><i class="fas fa-angle-right"></i></button>' +
+        '</div>' +
+        '</div>';
     }
   } else {
     if (result.length < 10) {
       l2 -= 10;
       table +=
-        '<footer><div><div><h3 class="d-inline" onclick="getData(\'' +
-        tablename +
-        "'," +
-        l1 +
-        "," +
-        l2 +
-        ');"><span class="badge badge-primary"><i class="fas fa-angle-left"></i></span></h3>';
-      table +=
-        '&nbsp;<h3 style="cursor:default;" class="d-inline"><span class="badge badge-secondary"><i class="fas fa-angle-right"></i></span></h3><div style="width:150px;">Page ' +
-        currentPage +
-        "/" +
-        totalPages +
-        "</div></div></div></footer>";
+        '<div class="d-flex justify-content-between align-items-center px-4 py-3">' +
+        '<div class="text-muted">Бет ' + currentPage + ' / ' + totalPages + '</div>' +
+        '<div class="btn-group">' +
+        '<button class="btn btn-primary btn-sm" onclick="getData(\'' + tablename + "'," + l1 + "," + l2 + ');"><i class="fas fa-angle-left"></i></button>' +
+        '<button class="btn btn-secondary btn-sm disabled"><i class="fas fa-angle-right"></i></button>' +
+        '</div>' +
+        '</div>';
     } else {
       l2 -= 10;
       table +=
-        '<footer><div><div><h3 class="d-inline" onclick="getData(\'' +
-        tablename +
-        "'," +
-        l1 +
-        "," +
-        l2 +
-        ');"><span class="badge badge-primary"><i class="fas fa-angle-left"></i></span></h3>';
+        '<div class="d-flex justify-content-between align-items-center px-4 py-3">' +
+        '<div class="text-muted">Бет ' + currentPage + ' / ' + totalPages + '</div>' +
+        '<div class="btn-group">' +
+        '<button class="btn btn-primary btn-sm" onclick="getData(\'' + tablename + "'," + l1 + "," + l2 + ');"><i class="fas fa-angle-left"></i></button>';
       l2 += 20;
       table +=
-        '&nbsp;<h3 class="d-inline" onclick="getData(\'' +
-        tablename +
-        "'," +
-        l1 +
-        "," +
-        l2 +
-        ');"><span class="badge badge-primary"><i class="fas fa-angle-right"></i></span></h3><div style="width:150px;">Page ' +
-        currentPage +
-        "/" +
-        totalPages +
-        "</div></div></div></footer>";
+        '<button class="btn btn-primary btn-sm" onclick="getData(\'' + tablename + "'," + l1 + "," + l2 + ');"><i class="fas fa-angle-right"></i></button>' +
+        '</div>' +
+        '</div>';
     }
   }
 
   $("#pageContent").html(table);
   $("#modals").html(modals + picModals);
+
+  // Add hover effects
+  $(".card-hover").hover(
+    function() {
+      $(this).addClass("shadow").css('transform', 'translateY(-5px)');
+    },
+    function() {
+      $(this).removeClass("shadow").css('transform', 'translateY(0)');
+    }
+  );
 }
 
 function makeModals(result) {
